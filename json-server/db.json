@@ -1,0 +1,13 @@
+{
+  "users": [
+    {
+      "id": 2,
+      "role": "WAITER",
+      "name": "laci"
+    }
+  ],
+  "spots": [],
+  "config": {
+    "appName": "Ponty-Jó Halász Csára"
+  }
+}
