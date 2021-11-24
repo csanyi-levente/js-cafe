@@ -1,0 +1,36 @@
+APP:
+Éttermi Nyilvántartó
+
+PLOT:
+Az alkalmazás célja, hogy egy étteremben a pincérek számára kitelepített kliens oldali szoftverben perzisztensen nyilvántartsuk a vendégek számára elérhető helyeket, lássuk az éppen aktuális rendeléseket, ezeket tudjuk módosítani, etc.
+
+ROLE-ok:
+- 1 főnök (mindent tud változtatni)
+- N pincér (néhány dolgot tud változtatni)
+- N szakács (almost read only)
+
+SZTORIK:
+- legyen egy login screen, ahol be tudunk jelentkezni (nem szükséges jelszó, elég egy felhasználónév - GagyiAuth)
+- a felhasználói felületen legyen egy navbar, ami később igény szerint bővíthető
+- csak főnök tud új szakácsokat és pincéreket hozzáadni
+- tartsuk nyilván a user-eket egy felületen, ez a felület az ő menedzselésükre szolgáljon
+- tartsuk nyilván, hogy az étteremben hány hely (spot) található (ezeket kicsit paraméterezzük fel pl székek száma, spot típusa)
+- hozzuk létre a megfelelő entitásokat
+- legyen egy felület ahol a spot-okat tudjuk menedzselni: hozzáad, elvesz
+- az egyes spot-okhoz tudjunk hozzárendelni, elvenni székeket
+- az asztalokhoz tudjunk szöveges tartalmat felvinni, mint rendelés
+- lássuk, ha az adott asztal rendelése a szakács által elkészült (ezáltal a pincér kiszolgálhatja)
+- jelezzük, hogy a pincér kivitt a rendelést
+- biztosítsunk lehetőséget egy asztal ürítésére
+- tároljuk valamilyen módon, hogy kik interaktálnak az egyes "tranzakciók" során (felhasználónév mentése)
+- env file használata
+
+TIPPEK:
+- használjunk UUID-kat
+- nézzünk szét a lodash lib-ben az NPM-en
+- ngx cookie, NPM
+
+LOCAL JSON SERVER:
+Run: npm i -g json-server
+Run: json-server db.json
+Examples: https://github.com/typicode/demo
