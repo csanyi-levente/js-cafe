@@ -1,0 +1,18 @@
+<mat-card>
+  <mat-card-title>Login</mat-card-title>
+  <mat-card-content>
+    <form >
+      <mat-form-field>
+        <input type="text" matInput placeholder="username" [(ngModel)]="username" name="username" id="username" />
+      </mat-form-field>
+
+      <p *ngIf="errorMsg" class="error">
+        {{ errorMsg }}
+      </p>
+
+      <div class="button">
+        <button (click)="login()" mat-button>Login</button>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "id": "e6e7831d-5762-4834-abf6-2f6bf2ff0bc0",
+      "username": "szakács",
+      "role": "COOK"
+    },
+    {
+      "id": "30e1b4b6-9894-44c8-8353-8006a11cfc5d",
+      "username": "pincér",
+      "role": "WAITER"
+    },
+    {
+      "id": "ca11ef36-b800-4732-8510-f5262daea828",
+      "username": "főnök",
+      "role": "CHIEF"
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+<app-header></app-header>
+
+<mat-card>
+  <form [formGroup]="editForm" *ngIf="editForm" (ngSubmit)="onSubmit()">
+    <p *ngIf="isEditing">
+      <mat-form-field appearance="fill">
+        <mat-label>ID</mat-label>
+        <input matInput formControlName="id" name="id">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Felhasználónév</mat-label>
+        <input matInput required formControlName="username" name="username">
+      </mat-form-field>
+    </p>
+    <p>
+      <mat-form-field appearance="legacy">
+        <mat-label>Jogosultság</mat-label>
+        <mat-select formControlName="role" name="role">
+          <mat-option value="CHIEF">főnök</mat-option>
+          <mat-option value="WAITER">pincér</mat-option>
+          <mat-option value="COOK">szakács</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </p>
+
+    <button type="submit" mat-raised-button color="primary">Mentés</button>
+  </form>
+</mat-card>
