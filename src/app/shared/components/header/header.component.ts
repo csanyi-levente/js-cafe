@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {User} from "../../../core/models/user.model";
-import {UserService} from "../../../core/services/user.service";
 import {AuthService} from "../../../core/services/auth.service";
 import {Router} from "@angular/router";
+import {Role} from "../../../core/models/role.enum";
 
 
 @Component({
@@ -12,22 +11,26 @@ import {Router} from "@angular/router";
 })
 export class HeaderComponent implements OnInit {
 
-  count: number = 0;
+  chiefRole = Role.CHIEF;
+  username = '';
+  role = '';
 
   constructor(
     private router: Router,
-    private userService: UserService,
     private authService: AuthService
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const loggedInUser = this.authService.getLoggedInUser()
+    this.username = loggedInUser.username;
+    this.role = loggedInUser.role;
+  }
 
   logout(): void {
     this.authService.logout();
   }
 
   openProfile(): void {
-    const user = this.authService.getLoggedUser();
-    this.router.navigate(['users/user/' + user.id]);
+    this.router.navigate(['users/user/' + this.authService.getLoggedInUser().id]);
   }
 }

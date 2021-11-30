@@ -1,15 +1,20 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable, of} from "rxjs";
 import {User} from "../models/user.model";
 import {HttpClient} from "@angular/common/http";
-import { map } from 'rxjs/operators';
+import {map} from 'rxjs/operators';
+import {Role} from "../models/role.enum";
+import {AuthService} from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+  ) {}
 
   findAll(): Observable<User[]> {
     return this.http.get<User[]>('http://localhost:3000/users');
@@ -22,7 +27,7 @@ export class UserService {
   findOneByUsername(username: string): Observable<User | undefined> {
     return this.http.get<User[]>('http://localhost:3000/users?username=' + username)
       .pipe(
-        map( responses => responses[0])
+        map( users => users[0])
       );
   }
 
@@ -30,8 +35,12 @@ export class UserService {
     return this.http.put('http://localhost:3000/users/' + user?.id, user);
   }
 
-  create(user: User | undefined): Observable<unknown> {
-    return this.http.post('http://localhost:3000/users', user);
+  create(user: User | undefined): Observable<User | any> {
+    if (this.authService.getLoggedInUser().role === Role.CHIEF) {
+      return this.http.post<User | any>('http://localhost:3000/users', user);
+    } else {
+      return of('permission error');
+    }
   }
 
   delete(id: number): Observable<unknown> {

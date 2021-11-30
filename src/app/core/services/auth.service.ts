@@ -15,7 +15,7 @@ export class AuthService {
 
   login(user: User): void {
     this.cookieService.put('user', JSON.stringify(user));
-    this.router.navigate(['users']);
+    this.router.navigate(['spots']);
   }
 
   logout(): void {
@@ -23,11 +23,11 @@ export class AuthService {
     this.router.navigate(['']);
   }
 
-  getLoggedUser(): User {
+  getLoggedInUser(): User {
     return JSON.parse(this.cookieService.get('user'));
   }
 
-  isLogged(): boolean {
+  isLoggedIn(): boolean {
     return this.cookieService.get('user') !== undefined;
   }
 }
