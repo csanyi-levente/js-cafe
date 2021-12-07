@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {ActivatedRoute, NavigationEnd, Router, RouterEvent} from "@angular/router";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {v4 as uuidv4} from 'uuid';
 import {Role} from "../../../../core/models/role.enum";
 import {UserService} from "../../../../core/services/user.service";
 import {AuthService} from "../../../../core/services/auth.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss']
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, OnDestroy {
   isEditing: boolean = false;
   role = '';
   editForm: FormGroup = this.formBuilder.group({
@@ -19,22 +20,43 @@ export class UserComponent implements OnInit {
     username: [null, Validators.required],
     role: [Role.WAITER, Validators.required]
   });
+  debugDate: number;
+  navigationEndSubscription: Subscription | undefined;
+  paramSubscription: Subscription | undefined;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private userService: UserService
-  ) { }
+    private userService: UserService,
+    private router: Router,
+  ) {
+    this.debugDate = new Date().getMilliseconds();
+    this.subscribeToRouterOnNavigationEnd();
+  }
 
   ngOnInit(): void {
+    console.log("UserComponent inint", this.debugDate)
     this.role = this.authService.getLoggedInUser().role;
-
     this.initForm();
+  }
+
+  subscribeToRouterOnNavigationEnd(): void {
+    this.navigationEndSubscription = this.router.events.subscribe(val => {
+      if (val instanceof NavigationEnd) {
+        //this.initForm();
+      }
+    });
   }
 
   initForm(): void {
     const userId = this.route.snapshot.params['id'];
+
+    this.paramSubscription = this.route.params.subscribe( userId => {
+      console.log(userId['id'])
+    });
+
+    console.log(this.route.snapshot.params);
     if (userId) {
       this.userService.findOneById(userId).subscribe( (user) => {
         this.editForm.controls['id'].setValue(user?.id);
@@ -72,5 +94,11 @@ export class UserComponent implements OnInit {
     } else {
       this.userService.update(this.editForm.getRawValue()).subscribe( () => {});
     }
+  }
+
+  ngOnDestroy(): void {
+    console.log("UserComponent destory", this.debugDate);
+    this.navigationEndSubscription?.unsubscribe();
+    this.paramSubscription?.unsubscribe();
   }
 }

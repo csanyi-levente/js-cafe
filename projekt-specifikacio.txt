@@ -13,8 +13,10 @@ SZTORIK:
 - legyen egy login screen, ahol be tudunk jelentkezni (nem szükséges jelszó, elég egy felhasználónév - GagyiAuth) - OK
 - a felhasználói felületen legyen egy navbar, ami később igény szerint bővíthető - OK
 - csak főnök tud új szakácsokat és pincéreket hozzáadni - OK
-- tartsuk nyilván a user-eket egy felületen, ez a felület az ő menedzselésükre szolgáljon
+- tartsuk nyilván a user-eket egy felületen, ez a felület az ő menedzselésükre szolgáljon OK
+
 - tartsuk nyilván, hogy az étteremben hány hely (spot) található (ezeket kicsit paraméterezzük fel pl székek száma, spot típusa)
+
 - hozzuk létre a megfelelő entitásokat
 - legyen egy felület ahol a spot-okat tudjuk menedzselni: hozzáad, elvesz
 - az egyes spot-okhoz tudjunk hozzárendelni, elvenni székeket
