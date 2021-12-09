@@ -20,7 +20,7 @@ export class UserService {
     return this.http.get<User[]>('http://localhost:3000/users');
   }
 
-  findOneById(id: number): Observable<User | undefined> {
+  findOneById(id: string): Observable<User | undefined> {
     return this.http.get<User>('http://localhost:3000/users/' + id);
   }
 

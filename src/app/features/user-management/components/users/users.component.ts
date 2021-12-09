@@ -22,8 +22,6 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    console.log("UsersComponent init ", this.debugDate)
-
     this.loadUsers();
     this.loggedInUser = this.authService.getLoggedInUser();
   }
@@ -37,6 +35,5 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log("UsersComponent destory", this.debugDate)
   }
 }

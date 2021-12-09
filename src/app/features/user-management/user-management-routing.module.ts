@@ -17,7 +17,7 @@ const routes: Routes = [
         canActivate: [UserGuard],
         component: UserComponent
       },
-      { path: ':id',
+      { path: ':kutyaId',
         canActivate: [UserGuard],
         component: UserComponent
       },

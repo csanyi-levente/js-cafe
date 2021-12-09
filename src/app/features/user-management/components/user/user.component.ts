@@ -6,6 +6,7 @@ import {Role} from "../../../../core/models/role.enum";
 import {UserService} from "../../../../core/services/user.service";
 import {AuthService} from "../../../../core/services/auth.service";
 import {Subscription} from "rxjs";
+import {User} from "../../../../core/models/user.model";
 
 @Component({
   selector: 'app-user',
@@ -32,32 +33,42 @@ export class UserComponent implements OnInit, OnDestroy {
     private router: Router,
   ) {
     this.debugDate = new Date().getMilliseconds();
-    this.subscribeToRouterOnNavigationEnd();
   }
 
   ngOnInit(): void {
-    console.log("UserComponent inint", this.debugDate)
     this.role = this.authService.getLoggedInUser().role;
-    this.initForm();
+    this.subscribeToUrlParamChanges();
   }
 
-  subscribeToRouterOnNavigationEnd(): void {
+  subscribeToUrlParamChanges() {
+    this.paramSubscription = this.route.params.subscribe( params => {
+      const userId = params['kutyaId'];
+      this.userService.findOneById(userId).subscribe(user => {
+        console.log("user ", user);
+        this.editForm.controls['id'].setValue(user?.id);
+        this.editForm.controls['username'].setValue(user?.username);
+        this.editForm.controls['role'].setValue(user?.role);
+
+        if (user?.id === this.authService.getLoggedInUser().id) {
+          this.editForm.controls['role'].disable();
+        }
+
+        this.isEditing = true;
+      });
+    });
+  }
+
+/*  subscribeToRouterOnNavigationEnd(): void {
     this.navigationEndSubscription = this.router.events.subscribe(val => {
       if (val instanceof NavigationEnd) {
         //this.initForm();
       }
     });
   }
-
+*/
   initForm(): void {
-    const userId = this.route.snapshot.params['id'];
 
-    this.paramSubscription = this.route.params.subscribe( userId => {
-      console.log(userId['id'])
-    });
-
-    console.log(this.route.snapshot.params);
-    if (userId) {
+    /*if (userId) {
       this.userService.findOneById(userId).subscribe( (user) => {
         this.editForm.controls['id'].setValue(user?.id);
         this.editForm.controls['username'].setValue(user?.username);
@@ -75,7 +86,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
     if (this.role !== Role.CHIEF) {
       this.editForm.controls['role'].disable();
-    }
+    }*/
   }
 
   onSubmit() {
@@ -97,7 +108,6 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log("UserComponent destory", this.debugDate);
     this.navigationEndSubscription?.unsubscribe();
     this.paramSubscription?.unsubscribe();
   }

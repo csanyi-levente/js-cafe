@@ -15,5 +15,11 @@
       "username": "főnök",
       "role": "CHIEF"
     }
+  ],
+  "city": [
+    {
+      "city": "Budapest",
+      "temperature": 20
+    }
   ]
 }
