@@ -1,3 +1,11 @@
 <app-header></app-header>
 
-<p>spots works!</p>
+<button (click)="addSpot()">
+  Új asztal
+</button>
+
+<div>
+  <div *ngFor="let spot of spots" class="spot" (click)="onSpotClick(spot)">
+    {{ spot.id }}
+  </div>
+</div>

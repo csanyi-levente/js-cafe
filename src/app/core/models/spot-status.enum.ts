@@ -1,0 +1,5 @@
+export enum SpotStatusEnum {
+  FREE = 'FREE',
+  WAITING_FOR_ORDER = 'WAITING_FOR_ORDER',
+  WAITING_FOR_PAYMENT = 'WAITING_FOR_PAYMENT',
+}

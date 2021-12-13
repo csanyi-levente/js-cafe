@@ -8,6 +8,12 @@ const routes: Routes = [
     path: '',
     component: SpotsComponent,
     canActivate: [AuthGuard],
+    children: [
+      {
+        path: ':id',
+        component: SpotsComponent
+      }
+    ]
   }
 ];
 
