@@ -5,7 +5,7 @@ import {v4 as uuidv4} from 'uuid';
 import {Role} from "../../../../core/models/role.enum";
 import {UserService} from "../../../../core/services/user.service";
 import {AuthService} from "../../../../core/services/auth.service";
-import {Subscription} from "rxjs";
+import {Subject, Subscription, takeUntil} from "rxjs";
 import {User} from "../../../../core/models/user.model";
 
 @Component({
@@ -14,6 +14,7 @@ import {User} from "../../../../core/models/user.model";
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit, OnDestroy {
+  destroy$: Subject<boolean> = new Subject();
   isEditing: boolean = false;
   role = '';
   editForm: FormGroup = this.formBuilder.group({
@@ -23,7 +24,6 @@ export class UserComponent implements OnInit, OnDestroy {
   });
   debugDate: number;
   navigationEndSubscription: Subscription | undefined;
-  paramSubscription: Subscription | undefined;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -41,7 +41,11 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   subscribeToUrlParamChanges() {
-    this.paramSubscription = this.route.params.subscribe( params => {
+    this.route.params
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe( params => {
       const userId = params['kutyaId'];
       this.userService.findOneById(userId).subscribe(user => {
         console.log("user ", user);
@@ -108,7 +112,10 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.navigationEndSubscription?.unsubscribe();
-    this.paramSubscription?.unsubscribe();
+    //this.navigationEndSubscription?.unsubscribe();
+    //this.paramSubscription?.unsubscribe();
+
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 }

@@ -5,7 +5,10 @@
 </button>
 
 <div>
-  <div *ngFor="let spot of spots" class="spot" (click)="onSpotClick(spot)">
-    {{ spot.id }}
+  <div>
+    <div *ngFor="let spot of spots" class="spot" >
+      <div (click)="onSpotClick(spot)">{{ spot.id }}</div>
+      <div (click)="onDeleteClick(spot)">DEL</div>
+    </div>
   </div>
 </div>

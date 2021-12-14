@@ -1,6 +1,7 @@
 <app-header></app-header>
 
 <mat-card>
+  <button (click)="callColorSubject()">colorsubject</button>
   <button mat-raised-button color="primary" [routerLink]="['/users/user']">Felhasználó hozzáadása</button>
 
   <table mat-table [dataSource]="users" class="mat-elevation-z8">

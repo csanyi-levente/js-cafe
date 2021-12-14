@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {User} from "../../../../core/models/user.model";
 import {UserService} from "../../../../core/services/user.service";
 import {AuthService} from "../../../../core/services/auth.service";
+import {EventManagerService} from "../../../../core/services/event-manager.service";
 
 @Component({
   selector: 'app-users',
@@ -16,7 +17,8 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private eventManagerService: EventManagerService
   ) {
     this.debugDate = new Date().getMilliseconds();
   }
@@ -24,6 +26,12 @@ export class UsersComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.loadUsers();
     this.loggedInUser = this.authService.getLoggedInUser();
+
+    this.eventManagerService.colorSubject$.subscribe(data => console.log('colorsubject sub', data));
+  }
+
+  callColorSubject(): void {
+    this.eventManagerService.emitColor('#000000');
   }
 
   delete(id: number): void {

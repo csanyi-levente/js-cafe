@@ -38,4 +38,12 @@ export class SpotsComponent implements OnInit {
   onSpotClick(spot: SpotModel): void {
     this.router.navigate(['spots',spot.id]);
   }
+
+  onDeleteClick(deleteSpot: SpotModel): void {
+    const index = this.spots.indexOf(deleteSpot);
+
+    this.spotService.deleteById(deleteSpot.id);
+
+    this.spots.splice(index, 1);
+  }
 }

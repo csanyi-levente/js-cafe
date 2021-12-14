@@ -26,4 +26,9 @@ export class SpotService {
 
     return result === undefined ? null : result;
   }
+
+  deleteById(id: string): void {
+    let spots = this.findAll();
+    localStorage.setItem(environment.spotsKey, JSON.stringify(spots.filter( item => item.id !== id )));
+  }
 }
