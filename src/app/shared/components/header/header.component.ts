@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../core/services/auth.service";
 import {Router} from "@angular/router";
 import {Role} from "../../../core/models/role.enum";
@@ -11,6 +11,7 @@ import {Role} from "../../../core/models/role.enum";
 })
 export class HeaderComponent implements OnInit {
 
+  isLoggedIn = false;
   chiefRole = Role.CHIEF;
   username = '';
   role = '';
@@ -21,9 +22,17 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const loggedInUser = this.authService.getLoggedInUser()
-    this.username = loggedInUser.username;
-    this.role = loggedInUser.role;
+    this.authService.isLoggedIn.subscribe( data => {
+      this.isLoggedIn = data;
+      if (data == true) {
+        const loggedInUser = this.authService.getLoggedInUser()
+        this.username = loggedInUser.username;
+        this.role = loggedInUser.role;
+      } else {
+        this.username = '';
+        this.role = '';
+      }
+    });
   }
 
   logout(): void {

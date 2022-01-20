@@ -1,8 +1,10 @@
-<button mat-button [routerLink]="'/spots'">Asztalok</button>
-<button mat-button [routerLink]="'/orders'">Rendelések</button>
-<button mat-button [routerLink]="'/users'" *ngIf="role === chiefRole">Felhasználók</button>
-<button mat-button [matMenuTriggerFor]="profileMenu"><mat-icon>face</mat-icon> {{ username }} </button>
-<mat-menu #profileMenu="matMenu" yPosition="above">
-  <button mat-menu-item (click)="openProfile()">Profil adatok</button>
-  <button mat-menu-item (click)="logout()">Kijelentkezés</button>
-</mat-menu>
+<div *ngIf="isLoggedIn">
+  <button mat-button routerLinkActive="active" [routerLink]="'/spots'">Asztalok</button>
+  <button mat-button routerLinkActive="active" [routerLink]="'/orders'">Rendelések</button>
+  <button mat-button routerLinkActive="active" [routerLink]="'/users'" *ngIf="role === chiefRole">Felhasználók</button>
+  <button mat-button [matMenuTriggerFor]="profileMenu"><mat-icon>face</mat-icon> {{ username }} </button>
+  <mat-menu #profileMenu="matMenu" yPosition="above">
+    <button mat-menu-item (click)="openProfile()">Profil adatok</button>
+    <button mat-menu-item (click)="logout()">Kijelentkezés</button>
+  </mat-menu>
+</div>
